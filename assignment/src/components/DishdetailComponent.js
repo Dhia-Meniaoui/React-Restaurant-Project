@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import CommentForm from './CommentForm';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { Link } from 'react-router-dom';
@@ -42,7 +43,14 @@ if (comments!=null) {
             </li></div>
         )
     })
-    return (<ul  key={comments.id}>{listcomment}</ul>);
+    return (
+        <div>
+        <ul  key={comments.id}>
+            {listcomment}
+        </ul>
+        <CommentForm/>
+        </div>
+        );
 
   }
   else{
