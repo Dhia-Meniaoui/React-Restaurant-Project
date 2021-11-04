@@ -7,8 +7,8 @@ export const Comments = (state = COMMENTS, action ) => {
             var comment = action.payload;
             comment.id = state.length;
             comment.date = new Date().toISOString();
-            console.log(comment);
-            return state.cancat(comment);
+            console.log("Comment: ", comment);
+            return state.concat(comment);
 
         default: 
             return state;

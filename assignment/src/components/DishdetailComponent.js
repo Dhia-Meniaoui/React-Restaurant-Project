@@ -9,6 +9,9 @@ const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
 
+/* ######################################################### */
+/* this button adds comment and the form */ 
+/* ######################################################### */
 export class CommentForm extends Component{
 
     constructor(props){
@@ -28,8 +31,7 @@ export class CommentForm extends Component{
       }
       handleComment(val) {
         this.toggleModal();
-
-
+        this.props.addComment(this.props.dishId, val.rating, val.author ,val.comment);
     }
 
     render(){
@@ -45,7 +47,7 @@ export class CommentForm extends Component{
                     <Row className="form-group">
                                 <Label  md={10}>Rating</Label>
                                 <Col md={12}>
-                                    <Control.select model=".contactType" name="contactType"
+                                    <Control.select model=".rating" name="rating"
                                         className="form-control">
                                         <option>1</option>
                                         <option>2</option>
@@ -56,9 +58,9 @@ export class CommentForm extends Component{
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                <Label htmlFor="name" md={10}>Your Name</Label>
+                                <Label htmlFor="author" md={10}>Your Name</Label>
                                 <Col md={12}>
-                                    <Control.text model=".name" id="name" name="name"
+                                    <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
@@ -79,9 +81,9 @@ export class CommentForm extends Component{
                             </Row>
 
                             <Row className="form-group">
-                                <Label htmlFor="Comment" md={10}>Comment</Label>
+                                <Label htmlFor="comment" md={10}>Comment</Label>
                                 <Col md={12}>
-                                    <Control.textarea model=".Comment" id="Comment" name="Comment"
+                                    <Control.textarea model=".comment" id="comment" name="comment"
                                         rows="12"
                                         className="form-control" />
                                 </Col>
@@ -103,8 +105,9 @@ export class CommentForm extends Component{
 
 
 
-
-
+/* ######################################################### */
+/* retrun the image the title and the description the dish */ 
+/* ######################################################### */
     function RenderDish({dish}){
     if (dish!=null) {
         return(
@@ -128,6 +131,9 @@ export class CommentForm extends Component{
     }
 }
 
+/* ######################################################### */
+/* return all the comments and the comment added with <commentForm> */
+/* ######################################################### */
 function RenderComments({comments , addComment , dishId}){
 
 if (comments!=null) { 
@@ -145,7 +151,7 @@ if (comments!=null) {
         <ul  key={comments.id}>
             {listcomment}
         </ul>
-        <CommentForm/>
+        <CommentForm dishId={dishId} addComment={addComment}/>
         </div>
         );
 
@@ -157,6 +163,10 @@ if (comments!=null) {
 }
 }
 
+
+/* ######################################################### */
+/* the main function of Dishdetail */
+/* ######################################################### */
   const Dishdetail = (props)=> {
     if (props.dish!=null) {
       return(
@@ -177,7 +187,9 @@ if (comments!=null) {
                 <RenderDish dish={props.dish} />
             </div>
             <div className="col-12 col-md-5 m-1">
-                <RenderComments comments={props.comments} />
+                <RenderComments comments={props.comments} 
+                addComment={props.addComment}
+                dishId={props.dish.id}/>
             </div>
         </div>
         </div> 
