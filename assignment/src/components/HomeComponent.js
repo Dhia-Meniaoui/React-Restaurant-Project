@@ -1,10 +1,29 @@
 import React from 'react';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle} from 'reactstrap';
+import {Loading} from './LoadingComponent';
 
-
-function RenderCard({item}) {
-
+function RenderCard({item , isloading ,errmsg}) {
+    console.log(isloading);
+    if (isloading) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        )
+    }
+    else if (errmsg) {
+        return(
+            <div className="container">
+                <div className="row">
+                    <h4>{errmsg}</h4>
+                </div>
+            </div>
+        )
+    }
+    else{
     return(
         <Card>
             <CardImg src={item.image} alt={item.name} />
@@ -15,7 +34,7 @@ function RenderCard({item}) {
             </CardBody>
         </Card>
     );
-
+    }
 }
 
 function Home(props) {
@@ -23,7 +42,7 @@ function Home(props) {
         <div className="container">
             <div className="row align-items-start">
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.dish} />
+                    <RenderCard item={props.dish} isloading={props.dishesLoading} errmsg={props.dishesErrMess}/>
                 </div>
                 <div className="col-12 col-md m-1">
                     <RenderCard item={props.promotion} />

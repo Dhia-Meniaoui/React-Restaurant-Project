@@ -2,7 +2,7 @@ import React , {Component} from "react";
 import {Button, Modal, ModalHeader, ModalBody, Breadcrumb, BreadcrumbItem,  Label, Col, Row ,Card, CardImg, CardText, CardBody, CardTitle } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Link } from 'react-router-dom';
-
+import {Loading} from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -109,6 +109,7 @@ export class CommentForm extends Component{
 /* retrun the image the title and the description the dish */ 
 /* ######################################################### */
     function RenderDish({dish}){
+
     if (dish!=null) {
         return(
             <div >
@@ -168,6 +169,27 @@ if (comments!=null) {
 /* the main function of Dishdetail */
 /* ######################################################### */
   const Dishdetail = (props)=> {
+    console.log(props.isloading);
+    if (props.isloading) {
+        return(
+         <div className="container">
+             <div className="row">
+                 <Loading />
+             </div>
+         </div>
+        );
+     }
+ 
+     if (props.errmsg) {
+         return(
+             <div className="container">
+                 <div className="row">
+                     <h4>{props.errmsg}</h4>
+                 </div>
+             </div>
+         )
+     }
+
     if (props.dish!=null) {
       return(
         <div className="container">
