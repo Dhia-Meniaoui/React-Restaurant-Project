@@ -5,7 +5,6 @@ import {Loading} from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 function RenderCard({item , isloading ,errmsg}) {
-    console.log(isloading);
     if (isloading) {
         return(
             <div className="container">
@@ -46,10 +45,10 @@ function Home(props) {
                     <RenderCard item={props.dish} isloading={props.dishesLoading} errmsg={props.dishesErrMess}/>
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.promotion}  isLoading={props.promoLoading} errMess={props.promoErrMess} />
+                    <RenderCard item={props.promotion} isLoading={props.promoLoading} errMess={props.promoErrMess}/>
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.leader} />
+                    <RenderCard item={props.leader}  isLoading={props.promoLoading} errMess={props.promoErrMess} />
                 </div>
             </div>
         </div>
