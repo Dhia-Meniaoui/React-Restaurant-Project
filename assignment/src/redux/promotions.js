@@ -8,6 +8,7 @@ export const Promotions = (state = {
     switch(action.type) {
 
         case actionTypes.ADD_PROMOS:
+            console.log(state);
             return {...state , errMsg: null , isloading : false , promotions: action.payload }
 
         case actionTypes.PROMOS_FAILED: 
