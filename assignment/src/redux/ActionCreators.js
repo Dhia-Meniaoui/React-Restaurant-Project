@@ -2,6 +2,51 @@ import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
 
+/********************  to post feedback   ****************/
+
+
+export const postFeedback = (firstname, lastname , telnum  , email , message )=> (dispatch) => {
+
+    const  fb= {                                                    
+        firstname : firstname,                                                    
+        lastname : lastname,                                                    
+        telnum : telnum ,                                                    
+        email : email  ,
+        message : message                                                  
+    };                                              
+       
+
+    return fetch(baseUrl + 'feedback', {                                                    
+        method: 'POST',                                                    
+        body: JSON.stringify(fb),                                                    
+        headers: {                                                    
+            'Content-Type': 'application/json'                                                    
+        },                                                                       
+        credentials: 'same-origin'                                                                       
+    })                                                                       
+        .then(Response => {                                                                       
+            if(Response) {                                                                       
+                return Response;
+            }
+            else { 
+                var error = new Error('Error ' + Response.status + '' + ': '+ Response.statusText);
+                error.reponse = Response;
+                throw error; 
+            }
+        },
+        error => {
+            var errmess = new Error(error.message);
+            throw errmess;
+        })
+        .catch(error => {console.log('post feedback '+error.message);}, alert('Your feedback could not be send it'))
+
+}
+
+
+
+
+
+
 /********************  to post comments  ****************/
 
 
@@ -48,55 +93,6 @@ export const addComment = ( comment ) => ({
     payload: comment  
 });
 
-
-
-
-/********************  to post feedback  ****************/
-
-
-/* export const postFeedback = (dishId, rating , author , comment )=> (dispatch) => {
-
-    const newComment = {                                                    
-        dishId : dishId,                                                    
-        rating : rating,                                                    
-        author : author,                                                    
-        comment : comment                                                    
-    };                                              
-    newComment.date = new Date().toISOString();       
-
-    return fetch(baseUrl + 'comments', {                                                    
-        method: 'POST',                                                    
-        body: JSON.stringify(newComment),                                                    
-        headers: {                                                    
-            'Content-Type': 'application/json'                                                    
-        },                                                                       
-        credentials: 'same-origin'                                                                       
-    })                                                                       
-        .then(Response => {                                                                       
-            if(Response) {                                                                       
-                return Response;
-            }
-            else { 
-                var error = new Error('Error ' + Response.status + '' + ': '+ Response.statusText);
-                error.reponse = Response;
-                throw error; 
-            }
-        },
-        error => {
-            var errmess = new Error(error.message);
-            throw errmess;
-        })
-        .then(Response => Response.json())
-        .then(Response => dispatch(addComment(Response)))
-        .catch(error => {console.log('post comments '+error.message);}, alert('Your comment could not be posted'))
-
-}
-
-export const addComment = ( comment ) => ({
-    type : ActionTypes.ADD_COMMENT,
-    payload: comment  
-});
- */
 /********************  for dishes and comments  ****************/
 export const fetchDishes = () => (dispatch) => {
     dispatch(dishesloading());
